@@ -238,6 +238,7 @@ class MQTTBridge(Node):
             manufacturer=self._manufacturer_name,
             serial_number=self._serial_number,
             topic="connection",
+            interface_name="coalescent",
         )
 
         # NOTE: will payload cannot be set dynamically or updated
@@ -278,6 +279,7 @@ class MQTTBridge(Node):
                     manufacturer=self._manufacturer_name,
                     serial_number=self._serial_number,
                     topic="order",
+                    interface_name="coalescent",
                 )
             )
             self.mqtt_client.subscribe(
@@ -285,6 +287,7 @@ class MQTTBridge(Node):
                     manufacturer=self._manufacturer_name,
                     serial_number=self._serial_number,
                     topic="instantActions",
+                    interface_name="coalescent",
                 )
             )
             self._publish_connection(
@@ -424,6 +427,7 @@ class MQTTBridge(Node):
                 manufacturer=self._manufacturer_name,
                 serial_number=self._serial_number,
                 topic="order",
+                interface_name="coalescent",
             )
         )
         self.mqtt_client.unsubscribe(
@@ -431,6 +435,7 @@ class MQTTBridge(Node):
                 manufacturer=self._manufacturer_name,
                 serial_number=self._serial_number,
                 topic="instantActions",
+                interface_name="coalescent",
             )
         )
 
@@ -463,6 +468,7 @@ class MQTTBridge(Node):
             manufacturer=self._manufacturer_name,
             serial_number=self._serial_number,
             topic="state",
+            interface_name="coalescent",
         )
         self._publish_to_topic(msg, topic)
 
@@ -485,6 +491,7 @@ class MQTTBridge(Node):
             manufacturer=self._manufacturer_name,
             serial_number=self._serial_number,
             topic="connection",
+            interface_name="coalescent",
         )
         self._publish_to_topic(msg, topic)
 
@@ -501,5 +508,6 @@ class MQTTBridge(Node):
             manufacturer=self._manufacturer_name,
             serial_number=self._serial_number,
             topic="visualization",
+            interface_name="coalescent",
         )
         self._publish_to_topic(msg, topic)
