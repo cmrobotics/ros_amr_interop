@@ -1009,8 +1009,11 @@ class VDA5050Controller(Node):
 
         if mode == OrderAcceptModes.STITCH:
             # Accept STITCH order
-            self.logger.debug("Clearing horizon and appending new graph to the current base.")
+            self.logger.info("Clearing horizon and appending new graph to the current base.")
 
+            self.logger.info(f"NODES1: '{self._current_order.nodes}'")
+            self.logger.info(f"------------------------------------")
+            self.logger.info(f"EDGES1: '{self._current_order.edges}'")
             # Clear horizon on current state
             # Avoid copying the stitching node twice
             self._current_state.nodes_states = [
@@ -1021,7 +1024,9 @@ class VDA5050Controller(Node):
             self._current_state.edge_states = [
                 edge_state for edge_state in self._current_state.edge_states if edge_state.released
             ]
-
+            self.logger.info(f"NODES2: '{self._current_order.nodes}'")
+            self.logger.info(f"------------------------------------")
+            self.logger.info(f"EDGES2: '{self._current_order.edges}'")
             # Clear horizon on current order and append new nodes / edges
             # Avoid copying the stitching node twice
             base_order_nodes = [
@@ -1036,6 +1041,9 @@ class VDA5050Controller(Node):
 
             self._current_order.nodes = base_order_nodes + order.nodes
             self._current_order.edges = base_order_edges + order.edges
+            self.logger.info(f"NODES3: '{self._current_order.nodes}'")
+            self.logger.info(f"------------------------------------")
+            self.logger.info(f"EDGES3: '{self._current_order.edges}'")
 
         else:
             # Accept NEW / UPDATE order
