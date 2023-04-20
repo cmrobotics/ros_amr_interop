@@ -1004,7 +1004,7 @@ class VDA5050Controller(Node):
                 STITCH: order's base is extended. It may include a new horizon.
         """
         self.logger.info(
-            f"Order '{order.order_id}' with update id '{order.order_update_id}' accepted!"
+            f"Order '{order.order_id}' with update id '{order.order_update_id}' accepted, mode: '{mode}'!"
         )
 
         if mode == OrderAcceptModes.STITCH:
@@ -1016,7 +1016,7 @@ class VDA5050Controller(Node):
             self.logger.info(f"EDGES1: '{self._current_order.edges}'")
             # Clear horizon on current state
             # Avoid copying the stitching node twice
-            self._current_state.nodes_states = [
+            self._current_state.node_states = [
                 node_state
                 for node_state in self._current_state.node_states
                 if node_state.released and node_state.sequenceId != order.nodes[0].sequenceId
@@ -1031,10 +1031,10 @@ class VDA5050Controller(Node):
             # Avoid copying the stitching node twice
             base_order_nodes = [
                 node
-                for node in order.nodes
+                for node in self._current_order.nodes
                 if node.released and node.sequenceId != order.nodes[0].sequenceId
             ]
-            base_order_edges = [edge for edge in order.edges if edge.released]
+            base_order_edges = [edge for edge in self._current_order.edges if edge.released]
 
             self._current_order.order_update_id = order.order_update_id
             self._current_order.zone_set_id = order.zone_set_id
@@ -1315,6 +1315,9 @@ class VDA5050Controller(Node):
                 for edge in self._current_order.edges
                 if edge.sequence_id == self._current_state.last_node_sequence_id + 1
             )
+
+            self.logger.info(f"EDGE!!!: '{next_edge}'")
+            self.logger.info(f"")
         except StopIteration:
             # This only happens when there is no order or it has finished,
             # but there is an active instant action running.
