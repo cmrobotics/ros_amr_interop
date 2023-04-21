@@ -1034,9 +1034,10 @@ class VDA5050Controller(Node):
                 for node in self._current_order.nodes
                 if node.released and node.sequenceId != order.nodes[0].sequenceId
             ]
-            base_order_edges = [edge for edge in self._current_order.edges if edge.released]
             self.logger.info(f"------------------------------------")
             self.logger.info(f"BASE ORDER NODES: '{base_order_nodes}'")
+
+            base_order_edges = [edge for edge in self._current_order.edges if edge.released]
             self.logger.info(f"BASE ORDER EDGES: '{base_order_edges}'")
             self.logger.info(f"------------------------------------")
 
@@ -1326,6 +1327,7 @@ class VDA5050Controller(Node):
             # This only happens when there is no order or it has finished,
             # but there is an active instant action running.
             # In this case, just exit.
+            self.logger.info(f"STOP ITERATION")
             return
 
         if not next_edge.released:
