@@ -1035,6 +1035,10 @@ class VDA5050Controller(Node):
                 if node.released and node.sequenceId != order.nodes[0].sequenceId
             ]
             base_order_edges = [edge for edge in self._current_order.edges if edge.released]
+            self.logger.info(f"------------------------------------")
+            self.logger.info(f"BASE ORDER NODES: '{base_order_nodes}'")
+            self.logger.info(f"BASE ORDER EDGES: '{base_order_edges}'")
+            self.logger.info(f"------------------------------------")
 
             self._current_order.order_update_id = order.order_update_id
             self._current_order.zone_set_id = order.zone_set_id
