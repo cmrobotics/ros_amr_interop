@@ -418,7 +418,7 @@ class VDA5050Controller(Node):
         for k, v in partial_state.items():
             setattr(self._current_state, k, v)
 
-        self.logger.debug(f"State updated: '{self._current_state}'.")
+        self.logger.log(f"State updated: '{self._current_state}'.")
         if publish_now:
             self._publish_state()
 
@@ -1011,9 +1011,6 @@ class VDA5050Controller(Node):
             # Accept STITCH order
             self.logger.info("Clearing horizon and appending new graph to the current base.")
 
-            self.logger.info(f"NODES1: '{self._current_order.nodes}'")
-            self.logger.info(f"------------------------------------")
-            self.logger.info(f"EDGES1: '{self._current_order.edges}'")
             # Clear horizon on current state
             # Avoid copying the stitching node twice
             self._current_state.node_states = [
@@ -1024,9 +1021,9 @@ class VDA5050Controller(Node):
             self._current_state.edge_states = [
                 edge_state for edge_state in self._current_state.edge_states if edge_state.released
             ]
-            self.logger.info(f"NODES2: '{self._current_order.nodes}'")
+            self.logger.info(f"NODE STATES 2: '{self._current_order.node_states}'")
             self.logger.info(f"------------------------------------")
-            self.logger.info(f"EDGES2: '{self._current_order.edges}'")
+            self.logger.info(f"EDGE STATES 2: '{self._current_order.edge_states}'")
             # Clear horizon on current order and append new nodes / edges
             # Avoid copying the stitching node twice
             base_order_nodes = [
@@ -1046,9 +1043,9 @@ class VDA5050Controller(Node):
 
             self._current_order.nodes = base_order_nodes + order.nodes
             self._current_order.edges = base_order_edges + order.edges
-            self.logger.info(f"NODES3: '{self._current_order.nodes}'")
+            self.logger.info(f"CURRENT ORDER NODES 3: '{self._current_order.nodes}'")
             self.logger.info(f"------------------------------------")
-            self.logger.info(f"EDGES3: '{self._current_order.edges}'")
+            self.logger.info(f"CURRENT ORDER EDGES 3: '{self._current_order.edges}'")
 
         else:
             # Accept NEW / UPDATE order
@@ -1321,7 +1318,7 @@ class VDA5050Controller(Node):
                 if edge.sequence_id == self._current_state.last_node_sequence_id + 1
             )
 
-            self.logger.info(f"EDGE!!!: '{next_edge}'")
+            self.logger.info(f"NEXT EDGE!!!: '{next_edge}'")
             self.logger.info(f"")
         except StopIteration:
             # This only happens when there is no order or it has finished,
