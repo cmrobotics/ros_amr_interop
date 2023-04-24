@@ -1019,7 +1019,7 @@ class VDA5050Controller(Node):
             self._current_state.node_states = [
                 node_state
                 for node_state in self._current_state.node_states
-                if node_state.released and node_state.sequenceId != order.nodes[0].sequenceId
+                if node_state.released and (node_state.sequence_id != order.nodes[0].sequence_id)
             ]
             self._current_state.edge_states = [
                 edge_state for edge_state in self._current_state.edge_states if edge_state.released
@@ -1032,7 +1032,7 @@ class VDA5050Controller(Node):
             base_order_nodes = [
                 node
                 for node in self._current_order.nodes
-                if node.released and node.sequenceId != order.nodes[0].sequenceId
+                if node.released and node.sequence_id != order.nodes[0].sequence_id
             ]
             self.logger.info(f"------------------------------------")
             self.logger.info(f"BASE ORDER NODES: '{base_order_nodes}'")
